@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "wagner.silva <wagner.silva@softplan.com.br>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.0",
     "@types/node": "^14.0.13",
