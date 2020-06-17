@@ -6,9 +6,9 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --passWithNoTests",
-    "test:watch": "test -- --watch",
-    "test:staged": "test -- --findRelatedTests",
-    "test:ci": "test -- --coverage"
+    "test:watch": "npm test -- --watch",
+    "test:staged": "npm test -- --findRelatedTests",
+    "test:ci": " npm test -- --coverage"
   },
   "devDependencies": {
     "@types/jest": "^26.0.0",
