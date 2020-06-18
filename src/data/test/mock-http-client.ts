@@ -1,12 +1,9 @@
 import {
   HttpPostClient,
-  HttpPostParams
-} from '@/data/protocols/http/http-post-client'
-import {
+  HttpPostParams,
   HttpResponse,
   HttpStatuscCode
-} from '@/data/protocols/http/htpp-response'
-
+} from '@/data/protocols/http'
 export class HttpPostClientSpy<T, R> implements HttpPostClient<T, R> {
   url?: string;
   body?: T;
