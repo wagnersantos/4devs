@@ -51,7 +51,7 @@ describe('RemoteAuthentication', () => {
     const { sut, httpPostClientSpy } = sutFactory()
 
     httpPostClientSpy.response = {
-      statusCode: HttpStatuscCode.unathorized
+      statusCode: HttpStatuscCode.unauthorized
     }
 
     const promise = sut.auth(mockAuthenticantion())
