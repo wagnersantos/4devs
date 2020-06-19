@@ -7,9 +7,13 @@ jest.mock('axios')
 
 const mockedAxios = axios as jest.Mocked<typeof axios>
 
+const sutFactory = (): AxiosHttpClient => {
+  return new AxiosHttpClient()
+}
+
 describe('AxiosHttpClient', () => {
   it('should  call axios with correct url', async () => {
-    const sut = new AxiosHttpClient()
+    const sut = sutFactory()
     const url = faker.internet.url()
 
     await sut.post({ url })
