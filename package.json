@@ -11,6 +11,7 @@
     "test:ci": " npm test -- --coverage"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/faker": "^4.1.12",
     "@types/jest": "^26.0.0",
     "@types/node": "^14.0.13",
@@ -28,5 +29,8 @@
     "lint-staged": "^10.2.10",
     "ts-jest": "^26.1.0",
     "typescript": "^3.9.5"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
   }
 }
