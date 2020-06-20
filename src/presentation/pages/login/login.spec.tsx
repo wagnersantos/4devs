@@ -64,4 +64,15 @@ describe('Login', () => {
       email: 'any_email'
     })
   })
+
+  it('should call validation with correct password', () => {
+    const { sut, validationSpy } = sutFactory()
+    const passwordInput = sut.getByTestId('password')
+
+    fireEvent.input(passwordInput, { target: { value: 'any_password' } })
+
+    expect(validationSpy.input).toEqual({
+      password: 'any_password'
+    })
+  })
 })
