@@ -71,4 +71,19 @@ describe('Login', () => {
     expect(passwordStatus.title).toBe(validationStub.errorMessage)
     expect(passwordStatus.textContent).toBe('🔴')
   })
+
+  it('should show valid password state if validation succeds', () => {
+    const { sut, validationStub } = sutFactory()
+    validationStub.errorMessage = null
+
+    const passwordInput = sut.getByTestId('password')
+    const password = faker.internet.password()
+
+    fireEvent.input(passwordInput, { target: { value: password } })
+
+    const passwordStatus = sut.getByTestId('password-status')
+
+    expect(passwordStatus.title).toBe('tudo certo')
+    expect(passwordStatus.textContent).toBe('🉑')
+  })
 })
