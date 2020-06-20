@@ -86,4 +86,19 @@ describe('Login', () => {
     expect(passwordStatus.title).toBe('tudo certo')
     expect(passwordStatus.textContent).toBe('🉑')
   })
+
+  it('should show valid email state if validation succeds', () => {
+    const { sut, validationStub } = sutFactory()
+    validationStub.errorMessage = null
+
+    const emailInput = sut.getByTestId('email')
+    const email = faker.internet.email()
+
+    fireEvent.input(emailInput, { target: { value: email } })
+
+    const emailStatus = sut.getByTestId('email-status')
+
+    expect(emailStatus.title).toBe('tudo certo')
+    expect(emailStatus.textContent).toBe('🉑')
+  })
 })
