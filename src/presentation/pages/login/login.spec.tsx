@@ -1,14 +1,17 @@
-import React from 'react'
+import React from 'react';
 
-import { render } from '@testing-library/react'
+import { render } from '@testing-library/react';
 
-import Login from './login'
+import Login from './login';
 
 describe('Login', () => {
-  it('should  not render spinner and error on start', () => {
-    const { getByTestId } = render(<Login />)
-    const errorWrap = getByTestId('error-wrap')
+  it('should  start with initial state', () => {
+    const { getByTestId } = render(<Login />);
 
-    expect(errorWrap.childElementCount).toBe(0)
-  })
-})
+    const errorWrap = getByTestId('error-wrap');
+    const submitButton = getByTestId('submit') as HTMLButtonElement;
+
+    expect(errorWrap.childElementCount).toBe(0);
+    expect(submitButton.disabled).toBe(true);
+  });
+});
