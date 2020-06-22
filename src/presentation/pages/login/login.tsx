@@ -32,13 +32,17 @@ const login: React.FC<Props> = ({ validation, authentication }: Props) => {
   ): Promise<void> => {
     event.preventDefault()
 
-    const { email, password, isLoading, emailError, passwordError } = state
+    try {
+      const { email, password, isLoading, emailError, passwordError } = state
 
-    if (isLoading || emailError || passwordError) return
+      if (isLoading || emailError || passwordError) return
 
-    setState({ ...state, isLoading: true })
+      setState({ ...state, isLoading: true })
 
-    await authentication.auth({ email, password })
+      await authentication.auth({ email, password })
+    } catch (error) {
+      setState({ ...state, isLoading: false, mainError: error.message })
+    }
   }
 
   useEffect(() => {
