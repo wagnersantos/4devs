@@ -12,18 +12,20 @@ import Login from './login'
 
 type SutTypes = {
   sut: RenderResult
-  validationStub: ValidationStub
 };
 
-const sutFactory = (): SutTypes => {
+type SutParams = {
+  validationError: string
+};
+
+const sutFactory = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
-  validationStub.errorMessage = faker.random.words()
+  validationStub.errorMessage = params?.validationError
 
   const sut = render(<Login validation={validationStub} />)
 
   return {
-    sut,
-    validationStub
+    sut
   }
 }
 
@@ -31,8 +33,8 @@ describe('Login', () => {
   afterEach(cleanup)
 
   it('should  start with initial state', () => {
-    const { sut, validationStub } = sutFactory()
-
+    const validationError = faker.random.words()
+    const { sut } = sutFactory({ validationError })
     const errorWrap = sut.getByTestId('error-wrap')
     const submitButton = sut.getByTestId('submit') as HTMLButtonElement
     const emailStatus = sut.getByTestId('email-status')
@@ -40,14 +42,15 @@ describe('Login', () => {
 
     expect(errorWrap.childElementCount).toBe(0)
     expect(submitButton.disabled).toBe(true)
-    expect(emailStatus.title).toBe(validationStub.errorMessage)
-    expect(passwordStatus.title).toBe(validationStub.errorMessage)
+    expect(emailStatus.title).toBe(validationError)
+    expect(passwordStatus.title).toBe(validationError)
     expect(emailStatus.textContent).toBe('🔴')
     expect(passwordStatus.textContent).toBe('🔴')
   })
 
   it('should show email error if validation fails', () => {
-    const { sut, validationStub } = sutFactory()
+    const validationError = faker.random.words()
+    const { sut } = sutFactory({ validationError })
     const emailInput = sut.getByTestId('email')
     const email = faker.internet.email()
 
@@ -55,12 +58,13 @@ describe('Login', () => {
 
     const emailStatus = sut.getByTestId('email-status')
 
-    expect(emailStatus.title).toBe(validationStub.errorMessage)
+    expect(emailStatus.title).toBe(validationError)
     expect(emailStatus.textContent).toBe('🔴')
   })
 
   it('should show password error if validation fails', () => {
-    const { sut, validationStub } = sutFactory()
+    const validationError = faker.random.words()
+    const { sut } = sutFactory({ validationError })
     const passwordInput = sut.getByTestId('password')
     const password = faker.internet.password()
 
@@ -68,13 +72,12 @@ describe('Login', () => {
 
     const passwordStatus = sut.getByTestId('password-status')
 
-    expect(passwordStatus.title).toBe(validationStub.errorMessage)
+    expect(passwordStatus.title).toBe(validationError)
     expect(passwordStatus.textContent).toBe('🔴')
   })
 
   it('should show valid email state if validation succeds', () => {
-    const { sut, validationStub } = sutFactory()
-    validationStub.errorMessage = null
+    const { sut } = sutFactory()
 
     const emailInput = sut.getByTestId('email')
     const email = faker.internet.email()
@@ -88,8 +91,7 @@ describe('Login', () => {
   })
 
   it('should show valid password state if validation succeds', () => {
-    const { sut, validationStub } = sutFactory()
-    validationStub.errorMessage = null
+    const { sut } = sutFactory()
 
     const passwordInput = sut.getByTestId('password')
     const password = faker.internet.password()
@@ -103,8 +105,7 @@ describe('Login', () => {
   })
 
   it('should enable submit buttton if form is valid', () => {
-    const { sut, validationStub } = sutFactory()
-    validationStub.errorMessage = null
+    const { sut } = sutFactory()
 
     const emailInput = sut.getByTestId('email')
     const email = faker.internet.email()
