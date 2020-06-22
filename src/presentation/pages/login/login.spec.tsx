@@ -72,6 +72,21 @@ describe('Login', () => {
     expect(passwordStatus.textContent).toBe('🔴')
   })
 
+  it('should show valid email state if validation succeds', () => {
+    const { sut, validationStub } = sutFactory()
+    validationStub.errorMessage = null
+
+    const emailInput = sut.getByTestId('email')
+    const email = faker.internet.email()
+
+    fireEvent.input(emailInput, { target: { value: email } })
+
+    const emailStatus = sut.getByTestId('email-status')
+
+    expect(emailStatus.title).toBe('tudo certo')
+    expect(emailStatus.textContent).toBe('🉑')
+  })
+
   it('should show valid password state if validation succeds', () => {
     const { sut, validationStub } = sutFactory()
     validationStub.errorMessage = null
@@ -87,18 +102,19 @@ describe('Login', () => {
     expect(passwordStatus.textContent).toBe('🉑')
   })
 
-  it('should show valid email state if validation succeds', () => {
+  it('should enable submit buttton if form is valid', () => {
     const { sut, validationStub } = sutFactory()
     validationStub.errorMessage = null
 
     const emailInput = sut.getByTestId('email')
     const email = faker.internet.email()
+    const passwordInput = sut.getByTestId('password')
+    const password = faker.internet.password()
+    const submitButton = sut.getByTestId('submit') as HTMLButtonElement
 
     fireEvent.input(emailInput, { target: { value: email } })
+    fireEvent.input(passwordInput, { target: { value: password } })
 
-    const emailStatus = sut.getByTestId('email-status')
-
-    expect(emailStatus.title).toBe('tudo certo')
-    expect(emailStatus.textContent).toBe('🉑')
+    expect(submitButton.disabled).toBe(false)
   })
 })
