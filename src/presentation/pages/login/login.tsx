@@ -11,6 +11,7 @@ import Context from '@/presentation/contexts/form/form-context'
 import { Validation } from '@/presentation/protocols/validation'
 
 import styles from './login-styles.scss'
+import { Link } from 'react-router-dom'
 
 type Props = {
   validation: Validation
@@ -81,7 +82,9 @@ const login: React.FC<Props> = ({ validation, authentication }: Props) => {
             Entrar
           </button>
 
-          <span className={styles.link}>Criar conta</span>
+          <Link data-testid="signup" to="signup" className={styles.link}>
+            Criar conta
+          </Link>
 
           <FormStatus />
         </form>
