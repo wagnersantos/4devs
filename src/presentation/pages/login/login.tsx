@@ -14,8 +14,9 @@ import styles from './login-styles.scss'
 
 type Props = {
   validation: Validation
+  authentication
 };
-const login: React.FC<Props> = ({ validation }: Props) => {
+const login: React.FC<Props> = ({ validation, authentication }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     email: '',
@@ -26,9 +27,14 @@ const login: React.FC<Props> = ({ validation }: Props) => {
   })
   const isButtonDisabled = !!state.emailError || !!state.passwordError
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     event.preventDefault()
     setState({ ...state, isLoading: true })
+
+    const { email, password } = state
+    await authentication.auth({ email, password })
   }
 
   useEffect(() => {
