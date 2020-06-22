@@ -7,8 +7,8 @@ import { HttpStatuscCode } from '@/data/protocols/http'
 
 import { mockAuthenticantion, mockAccountModel } from '@/domain/test'
 import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors'
-import { AuthenticationParams } from '@/domain/usercases'
 import { AccountModel } from '@/domain/models'
+import { AuthenticationParams } from '@/domain/usecases'
 
 type SutTypes = {
   sut: RemoteAuthentication
