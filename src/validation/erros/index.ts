@@ -1,2 +1,2 @@
 export * from './required-field-validation'
-export * from './invalida-filed-error'
+export * from './invalid-filed-error'
