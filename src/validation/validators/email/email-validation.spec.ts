@@ -8,14 +8,21 @@ const sutFactory = (): EmailValidation =>
 describe('EmailValidation', () => {
   it('should return error if email is invalid', () => {
     const sut = sutFactory()
-    const error = sut.validate('')
+    const error = sut.validate(faker.random.word())
 
     expect(error).toEqual(new InvalidFieldError())
   })
 
-  it('should return false if email is valid', () => {
+  it('should return falsy if email is valid', () => {
     const sut = sutFactory()
     const error = sut.validate(faker.internet.email())
+
+    expect(error).toBeFalsy()
+  })
+
+  it('should return falsy if email is empty', () => {
+    const sut = sutFactory()
+    const error = sut.validate('')
 
     expect(error).toBeFalsy()
   })
