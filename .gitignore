@@ -2,3 +2,5 @@ node_modules
 .vscode
 coverage
 public/js
+yarn.lock
+yarn-error.log
