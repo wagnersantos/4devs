@@ -9,7 +9,8 @@
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": " npm test -- --coverage"
+    "test:ci": " npm test -- --coverage",
+    "check": "upgrade-interactive --lastest"
   },
   "devDependencies": {
     "@testing-library/react": "^10.3.0",
