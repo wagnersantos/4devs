@@ -10,6 +10,7 @@
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": " npm test -- --coverage",
+    "test:coveralls": " npm run test:ci && coverage < coverage/lcov.info",
     "check": "upgrade-interactive --lastest"
   },
   "devDependencies": {
@@ -23,6 +24,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "clean-webpack-plugin": "^3.0.0",
+    "coveralls": "^3.1.0",
     "css-loader": "^3.6.0",
     "eslint": "^7.2.0",
     "eslint-config-standard-with-typescript": "11",
