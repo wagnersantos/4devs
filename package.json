@@ -9,8 +9,8 @@
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
-    "test:ci": " npm test -- --coverage",
-    "test:coveralls": " npm run test:ci && coverage < coverage/lcov.info",
+    "test:ci": "npm test -- --coverage",
+    "test:coveralls": "npm run test:ci && coveralls coverage/lcov.info",
     "check": "upgrade-interactive --lastest"
   },
   "devDependencies": {
