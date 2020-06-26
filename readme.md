@@ -1,61 +1,11 @@
-<style>
-p{
- display: flex;
- justify-content: center;
-}
-a, p, ul, li{
-  text-decoration:none;
-}
-a + a {
-  margin-left: 10px;
-}
-
-#myBtn {
-  display: none;
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  z-index: 99;
-  font-size: 24px;
-  border: none;
-  outline: none;
-  background-color: rgb(255, 82, 82);
-  color: white;
-  cursor: pointer;
-  padding: 15px;
-  border-radius: 50%;
-}
-
-#myBtn:hover {
-opacity: 0.6
-}
-</style>
-<script>
-mybutton = document.getElementById("myBtn");
-window.onscroll = function() {scrollFunction()};
-function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    mybutton.style.display = "block";
-  } else {
-    mybutton.style.display = "none";
-  }
-}
-function topFunction() {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-}
-</script>
-
-<p>
+<p align="center">
 <a href="https://coveralls.io/github/wagnersantos/4devs?branch=master"><img src="https://travis-ci.com/wagnersantos/4devs.svg?branch=master">
-<a href='https://coveralls.io/github/wagnersantos/4devs?branch=master'><img src='https://coveralls.io/repos/github/wagnersantos/4devs/badge.svg?branch=master' alt='Coverage Status' /></a>
-<a href="http://standardjs.com"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg"></a>
-<a href="https://opensource.org/licenses/"><img src="https://img.shields.io/badge/License-GPL%20v3-yellow.svg" /></a>
-<a href="https://opensource.org/"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103"></a>
+<a style="margin-left:10px;" href='https://coveralls.io/github/wagnersantos/4devs?branch=master'><img src='https://coveralls.io/repos/github/wagnersantos/4devs/badge.svg?branch=master' alt='Coverage Status' /></a>
+<a style="margin-left:10px;" href="http://standardjs.com"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg"></a>
+<a style="margin-left:10px;" href="https://opensource.org/licenses/"><img src="https://img.shields.io/badge/License-GPL%20v3-yellow.svg" /></a>
+<a style="margin-left:10px;" href="https://opensource.org/"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103"></a>
 
 </p>
-
-<button onclick="topFunction()" id="myBtn" title="Voltar para o topo">^</button>
 
 # **4Dev React**
 
@@ -88,6 +38,8 @@ O objetivo do projeto é aprender a criar um sistema em ReactJs utilizando os no
 - Composition Over Inheritance
 - Small Commits
 
+<span style="margin:0 25px;"><a href="#menu">voltar ao menu</a></span>
+
 > ## Design Patterns
 
 - Factory
@@ -99,6 +51,8 @@ O objetivo do projeto é aprender a criar um sistema em ReactJs utilizando os no
 - Composition Root
 - Builder
 - Proxy
+
+<span style="margin:0 25px;"><a href="#menu">voltar ao menu</a></span>
 
 > ## Metodologias e Designs
 
@@ -115,6 +69,8 @@ O objetivo do projeto é aprender a criar um sistema em ReactJs utilizando os no
 - Continuous Integration
 - Continuous Delivery
 - Continuous Deployment
+
+<span style="margin:0 25px;"><a href="#menu">voltar ao menu</a></span>
 
 > ## Bibliotecas e Ferramentas
 
@@ -138,6 +94,8 @@ O objetivo do projeto é aprender a criar um sistema em ReactJs utilizando os no
 - Standard Javascript Style
 - React Flip Move
 
+<span style="margin:0 25px;"><a href="#menu">voltar ao menu</a></span>
+
 > ## Features do React
 
 - Functional Components
@@ -150,6 +108,8 @@ O objetivo do projeto é aprender a criar um sistema em ReactJs utilizando os no
 - Custom Hooks
 - Router
 - Memo
+
+<span style="margin:0 25px;"><a href="#menu">voltar ao menu</a></span>
 
 > ## Features do Git
 
@@ -170,6 +130,8 @@ O objetivo do projeto é aprender a criar um sistema em ReactJs utilizando os no
 - Shortlog
 - Status
 
+<span style="margin:0 25px;"><a href="#menu">voltar ao menu</a></span>
+
 > ## Features do Typescript
 
 - POO Avançado
@@ -183,6 +145,8 @@ O objetivo do projeto é aprender a criar um sistema em ReactJs utilizando os no
 - Deploy
 - Generics
 
+<span style="margin:0 25px;"><a href="#menu">voltar ao menu</a></span>
+
 > ## Features de Testes
 
 - Testes Unitários
@@ -195,3 +159,5 @@ O objetivo do projeto é aprender a criar um sistema em ReactJs utilizando os no
 - Spies
 - Fakes
 - Dummies
+
+<span style="margin:0 25px;"><a href="#menu">voltar ao menu</a></span>
