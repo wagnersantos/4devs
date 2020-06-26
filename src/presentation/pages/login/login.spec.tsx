@@ -241,6 +241,21 @@ describe('Login', () => {
     expect(history.location.pathname).toBe('/')
   })
 
+  it('should present error if saveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = sutFactory()
+
+    const error = new InvalidCredentialsError()
+
+    jest
+      .spyOn(saveAccessTokenMock, 'save')
+      .mockReturnValueOnce(Promise.reject(error))
+
+    await simulateValidSubmit(sut)
+
+    testErrorWrapChildCount(sut, 1)
+    testElementText(sut, 'main-error', error.message)
+  })
+
   it('should go to signup page', () => {
     const { sut } = sutFactory()
     const register = sut.getByTestId('signup')
