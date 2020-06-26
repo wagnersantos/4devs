@@ -5,7 +5,7 @@ import { AuthenticationParams } from '@/domain/usecases'
 
 export const mockAuthenticantion = (): AuthenticationParams => ({
   email: faker.internet.email(),
-  passowrd: faker.internet.password()
+  password: faker.internet.password()
 })
 
 export const mockAccountModel = (): AccountModel => ({
