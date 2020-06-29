@@ -1,6 +1,7 @@
 import { AddAccount, AddAccountParams } from '@/domain/usecases'
 import { AccountModel } from '@/domain/models'
-import { HttpPostClient } from '@/data/protocols/http'
+import { HttpPostClient, HttpStatuscCode } from '@/data/protocols/http'
+import { EmailInUseError } from '@/domain/errors'
 
 export class RemoteAddAccount implements AddAccount {
   constructor (
@@ -12,11 +13,16 @@ export class RemoteAddAccount implements AddAccount {
   ) {}
 
   async add (params: AddAccountParams): Promise<AccountModel> {
-    await this.httpPostClient.post({
+    const httpResponse = await this.httpPostClient.post({
       url: this.url,
       body: params
     })
 
-    return null
+    switch (httpResponse.statusCode) {
+      case HttpStatuscCode.forbidden:
+        throw new EmailInUseError()
+      default:
+        return null
+    }
   }
 }
