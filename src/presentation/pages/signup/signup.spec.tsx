@@ -98,4 +98,15 @@ describe('Signup', () => {
     Helper.populateField(sut, 'passwordConfirmation')
     Helper.testStatusForField(sut, 'passwordConfirmation')
   })
+
+  it('should enable submit buttton if form is valid', async () => {
+    const { sut } = sutFactory()
+
+    Helper.populateField(sut, 'name')
+    Helper.populateField(sut, 'email')
+    Helper.populateField(sut, 'password')
+    Helper.populateField(sut, 'passwordConfirmation')
+
+    Helper.testButtonIsDisabled(sut, 'submit', false)
+  })
 })
