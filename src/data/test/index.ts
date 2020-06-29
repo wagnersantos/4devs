@@ -1,2 +1,2 @@
-export * from './mock-http-client'
-export * from './mock-http-posts'
+export * from './mock-http'
+export * from './mock-cache'
