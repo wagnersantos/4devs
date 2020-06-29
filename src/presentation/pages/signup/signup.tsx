@@ -29,6 +29,12 @@ const signup: React.FC<Props> = ({ validation }: Props) => {
     mainError: ''
   })
 
+  const isButtonDisabled =
+    !!state.nameError ||
+    !!state.emailError ||
+    !!state.passwordError ||
+    !!state.passwordConfirmationError
+
   useEffect(() => {
     setState({
       ...state,
@@ -63,7 +69,7 @@ const signup: React.FC<Props> = ({ validation }: Props) => {
           />
 
           <button
-            disabled
+            disabled={isButtonDisabled}
             data-testid="submit"
             className={styles.submit}
             type="submit"
