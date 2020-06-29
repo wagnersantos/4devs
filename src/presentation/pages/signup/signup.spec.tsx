@@ -1,31 +1,64 @@
 import React from 'react'
-import { render, RenderResult } from '@testing-library/react'
+import faker from 'faker'
+import {
+  render,
+  RenderResult,
+  cleanup,
+  fireEvent
+} from '@testing-library/react'
 
 import { SignUp } from '@/presentation/pages'
-import { Helper } from '@/presentation/test'
+import { Helper, ValidationStub } from '@/presentation/test'
 
 type SutTypes = {
   sut: RenderResult
 };
 
-const sutFactory = (): SutTypes => {
-  const sut = render(<SignUp />)
+type SutParams = {
+  validationError: string
+};
+
+const sutFactory = (params?: SutParams): SutTypes => {
+  const validationStub = new ValidationStub()
+  validationStub.errorMessage = params?.validationError
+
+  const sut = render(<SignUp validation={validationStub} />)
 
   return {
     sut
   }
 }
 
+const populateField = (
+  sut: RenderResult,
+  fieldName: string,
+  value = faker.random.word()
+): void => {
+  const fieldInput = sut.getByTestId(fieldName)
+  fireEvent.input(fieldInput, { target: { value } })
+}
+
 describe('Signup', () => {
+  afterEach(cleanup)
+
   it('should  start with initial state', () => {
-    const validationError = 'Campo obrigatório'
-    const { sut } = sutFactory()
+    const validationError = faker.random.words()
+    const error = 'Campo obrigatório'
+    const { sut } = sutFactory({ validationError })
 
     Helper.testChildCount(sut, 'error-wrap', 0)
     Helper.testButtonIsDisabled(sut, 'submit', true)
     Helper.testStatusForField(sut, 'name', validationError)
-    Helper.testStatusForField(sut, 'email', validationError)
-    Helper.testStatusForField(sut, 'password', validationError)
-    Helper.testStatusForField(sut, 'passwordConfirmation', validationError)
+    Helper.testStatusForField(sut, 'email', error)
+    Helper.testStatusForField(sut, 'password', error)
+    Helper.testStatusForField(sut, 'passwordConfirmation', error)
+  })
+
+  it('should show name error if validation fails', () => {
+    const validationError = faker.random.words()
+    const { sut } = sutFactory({ validationError })
+
+    populateField(sut, 'name')
+    Helper.testStatusForField(sut, 'name', validationError)
   })
 })
