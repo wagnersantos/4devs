@@ -161,4 +161,13 @@ describe('Signup', () => {
       passwordConfirmation: password
     })
   })
+
+  it('should call addAccount only once', async () => {
+    const { sut, addAccountSpy } = sutFactory()
+
+    await simulateValidSubmit(sut)
+    await simulateValidSubmit(sut)
+
+    expect(addAccountSpy.callsCount).toBe(1)
+  })
 })
