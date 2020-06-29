@@ -78,6 +78,13 @@ describe('Signup', () => {
     Helper.testStatusForField(sut, 'name')
   })
 
+  it('should show valid email state if validation succeds', () => {
+    const { sut } = sutFactory()
+
+    Helper.populateField(sut, 'email')
+    Helper.testStatusForField(sut, 'email')
+  })
+
   it('should show valid password state if validation succeds', () => {
     const { sut } = sutFactory()
 
