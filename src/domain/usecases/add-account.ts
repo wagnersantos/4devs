@@ -4,9 +4,9 @@ export type AddAccountParams = {
   name: string
   email: string
   password: string
-  passwordConfirmation
+  passwordConfirmation: string
 };
 
 export interface AddAccount {
-  auth: (params: AddAccountParams) => Promise<AccountModel>
+  add: (params: AddAccountParams) => Promise<AccountModel>
 }
