@@ -29,7 +29,6 @@ describe('Signup', () => {
 
   it('should  start with initial state', () => {
     const validationError = faker.random.words()
-    const error = 'Campo obrigatório'
     const { sut } = sutFactory({ validationError })
 
     Helper.testChildCount(sut, 'error-wrap', 0)
@@ -37,7 +36,7 @@ describe('Signup', () => {
     Helper.testStatusForField(sut, 'name', validationError)
     Helper.testStatusForField(sut, 'email', validationError)
     Helper.testStatusForField(sut, 'password', validationError)
-    Helper.testStatusForField(sut, 'passwordConfirmation', error)
+    Helper.testStatusForField(sut, 'passwordConfirmation', validationError)
   })
 
   it('should show name error if validation fails', () => {
@@ -62,5 +61,13 @@ describe('Signup', () => {
 
     Helper.populateField(sut, 'password')
     Helper.testStatusForField(sut, 'password', validationError)
+  })
+
+  it('should show passwordConfirmation error if validation fails', () => {
+    const validationError = faker.random.words()
+    const { sut } = sutFactory({ validationError })
+
+    Helper.populateField(sut, 'passwordConfirmation')
+    Helper.testStatusForField(sut, 'passwordConfirmation', validationError)
   })
 })
