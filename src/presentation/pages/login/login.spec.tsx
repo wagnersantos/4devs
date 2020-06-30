@@ -191,7 +191,7 @@ describe('Login', () => {
 
     jest
       .spyOn(saveAccessTokenMock, 'save')
-      .mockReturnValueOnce(Promise.reject(error))
+      .mockRejectedValueOnce(error)
 
     await simulateValidSubmit(sut)
 

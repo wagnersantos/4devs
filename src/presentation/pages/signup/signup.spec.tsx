@@ -221,4 +221,19 @@ describe('Signup', () => {
     expect(history.length).toBe(1)
     expect(history.location.pathname).toBe('/')
   })
+
+  it('should present error if saveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = sutFactory()
+
+    const error = new EmailInUseError()
+
+    jest
+      .spyOn(saveAccessTokenMock, 'save')
+      .mockRejectedValueOnce(error)
+
+    await simulateValidSubmit(sut)
+
+    Helper.testChildCount(sut, 'error-wrap', 1)
+    Helper.testElementText(sut, 'main-error', error.message)
+  })
 })
