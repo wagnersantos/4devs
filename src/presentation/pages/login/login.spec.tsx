@@ -201,9 +201,9 @@ describe('Login', () => {
 
   it('should go to signup page', () => {
     const { sut } = sutFactory()
-    const register = sut.getByTestId('signup')
+    const registerLink = sut.getByTestId('signup-link')
 
-    fireEvent.click(register)
+    fireEvent.click(registerLink)
 
     expect(history.length).toBe(2)
     expect(history.location.pathname).toBe('/signup')
