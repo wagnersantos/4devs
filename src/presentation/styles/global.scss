@@ -24,3 +24,25 @@ input[type='text'] {
     outline-color: $primaryLight;
   }
 }
+
+button {
+  background-color: $primary;
+  line-height: 50px;
+  color: $white;
+  border-radius: 8px;
+  font-size: 16px;
+  border: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    background-color: $disabledBackground;
+    color: $disabledColor;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

@@ -4,7 +4,8 @@ import {
   Footer,
   FormStatus,
   Input,
-  LoginHeader
+  LoginHeader,
+  SubmitButton
 } from '@/presentation/components'
 import { Link, useHistory } from 'react-router-dom'
 
@@ -27,6 +28,7 @@ const login: React.FC<Props> = ({
 }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
+    isFormInvalid: true,
     email: '',
     password: '',
     emailError: '',
@@ -34,7 +36,7 @@ const login: React.FC<Props> = ({
     mainError: ''
   })
   const history = useHistory()
-  const isButtonDisabled = !!state.emailError || !!state.passwordError
+  const { email, password, isLoading, isFormInvalid } = state
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
@@ -42,9 +44,7 @@ const login: React.FC<Props> = ({
     event.preventDefault()
 
     try {
-      const { email, password, isLoading, emailError, passwordError } = state
-
-      if (isLoading || emailError || passwordError) return
+      if (isLoading || isFormInvalid) return
 
       setState({ ...state, isLoading: true })
 
@@ -59,10 +59,15 @@ const login: React.FC<Props> = ({
   }
 
   useEffect(() => {
+    const emailError = validation.validate('email', state.email)
+    const passwordError = validation.validate('password', state.password)
+    const isFormInvalid = !!emailError || !!passwordError
+
     setState({
       ...state,
-      emailError: validation.validate('email', state.email),
-      passwordError: validation.validate('password', state.password)
+      emailError,
+      passwordError,
+      isFormInvalid
     })
   }, [state.email, state.password])
 
@@ -84,14 +89,7 @@ const login: React.FC<Props> = ({
             placeholder="Digite sua senha"
           />
 
-          <button
-            data-testid="submit"
-            disabled={isButtonDisabled}
-            className={styles.submit}
-            type="submit"
-          >
-            Entrar
-          </button>
+          <SubmitButton text="Entrar" />
 
           <Link data-testid="signup-link" to="signup" className={styles.link}>
             Criar conta
