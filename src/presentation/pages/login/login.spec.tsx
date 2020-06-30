@@ -70,15 +70,6 @@ const simulateValidSubmit = async (
   await waitFor(() => form)
 }
 
-const testElementText = (
-  sut: RenderResult,
-  fieldName: string,
-  text: string
-): void => {
-  const element = sut.getByTestId(fieldName)
-  expect(element.textContent).toBe(text)
-}
-
 describe('Login', () => {
   afterEach(cleanup)
 
@@ -172,12 +163,12 @@ describe('Login', () => {
 
     jest
       .spyOn(authenticationSpy, 'auth')
-      .mockReturnValueOnce(Promise.reject(error))
+      .mockRejectedValueOnce(error)
 
     await simulateValidSubmit(sut)
 
     Helper.testChildCount(sut, 'error-wrap', 1)
-    testElementText(sut, 'main-error', error.message)
+    Helper.testElementText(sut, 'main-error', error.message)
   })
 
   it('should call SaveAccessToken on success', async () => {
@@ -205,7 +196,7 @@ describe('Login', () => {
     await simulateValidSubmit(sut)
 
     Helper.testChildCount(sut, 'error-wrap', 1)
-    testElementText(sut, 'main-error', error.message)
+    Helper.testElementText(sut, 'main-error', error.message)
   })
 
   it('should go to signup page', () => {

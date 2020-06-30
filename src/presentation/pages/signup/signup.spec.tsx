@@ -10,6 +10,7 @@ import {
 
 import { SignUp } from '@/presentation/pages'
 import { Helper, ValidationStub, AddAccountSpy } from '@/presentation/test'
+import { EmailInUseError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RenderResult
@@ -178,5 +179,20 @@ describe('Signup', () => {
     await simulateValidSubmit(sut)
 
     expect(addAccountSpy.callsCount).toBe(0)
+  })
+
+  it('should present error if addAccount fails', async () => {
+    const { sut, addAccountSpy } = sutFactory()
+
+    const error = new EmailInUseError()
+
+    jest
+      .spyOn(addAccountSpy, 'add')
+      .mockRejectedValueOnce(error)
+
+    await simulateValidSubmit(sut)
+
+    Helper.testChildCount(sut, 'error-wrap', 1)
+    Helper.testElementText(sut, 'main-error', error.message)
   })
 })
