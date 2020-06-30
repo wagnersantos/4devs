@@ -4,11 +4,16 @@
       "version": "detect"
     }
   },
-  "extends": ["standard-with-typescript", "plugin:react/recommended"],
+  "extends": [
+    "standard-with-typescript",
+    "plugin:react/recommended",
+    "plugin:cypress/recommended"
+  ],
+  "env": { "cypress/globals": true },
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "cypress"],
   "rules": {
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
