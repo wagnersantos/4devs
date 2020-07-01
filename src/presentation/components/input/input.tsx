@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 
 import Context from '@/presentation/contexts/form/form-context'
 
@@ -11,7 +11,10 @@ HTMLInputElement
 
 const input: React.FC<Props> = (props: Props) => {
   const { state, setState } = useContext(Context)
+  const inputRef = useRef<HTMLInputElement>()
   const error = state[`${props.name}Error`]
+  const status = error ? '🔴' : '🉑'
+  const title = error || 'tudo certo'
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>): void => {
     setState({
@@ -20,23 +23,24 @@ const input: React.FC<Props> = (props: Props) => {
     })
   }
 
-  const getStatus = (): string => {
-    return error ? '🔴' : '🉑'
-  }
-
-  const getTitle = (): string => {
-    return error || 'tudo certo'
-  }
-
   return (
     <div className={styles.inputWrap}>
-      <input {...props} data-testid={props.name} onChange={handleChange} />
+      <input
+        {...props}
+        ref={inputRef}
+        placeholder=" "
+        data-testid={props.name}
+        onChange={handleChange}
+      />
+      <label onClick={() => { inputRef.current.focus() }}>
+        {props.placeholder}
+      </label>
       <span
         data-testid={`${props.name}-status`}
-        title={getTitle()}
+        title={title}
         className={styles.status}
       >
-        {getStatus()}
+        {status}
       </span>
     </div>
   )
