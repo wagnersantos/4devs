@@ -1,6 +1,16 @@
 import faker from 'faker'
 import * as FormHelper from '../support/form-helper'
 
+const simuldateValidSubmit = (): void => {
+  const password = faker.random.alphaNumeric(5)
+  cy.getByTestId('name').type(faker.name.findName())
+  cy.getByTestId('email').type(faker.internet.email())
+  cy.getByTestId('password').type(password)
+  cy.getByTestId('passwordConfirmation').type(password)
+
+  cy.getByTestId('submit').click()
+}
+
 describe('SignUp', () => {
   beforeEach(() => {
     cy.server()
@@ -47,5 +57,20 @@ describe('SignUp', () => {
 
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
+  })
+
+  it('should present invalidCredentialsError on 403', () => {
+    cy.route({
+      method: 'POST',
+      url: /signup/,
+      status: 403,
+      response: {
+        error: faker.random.words()
+      }
+    }).as('request')
+
+    simuldateValidSubmit()
+    FormHelper.testMainError('Esse e-mail já está em uso')
+    FormHelper.testUrl('/signup')
   })
 })
