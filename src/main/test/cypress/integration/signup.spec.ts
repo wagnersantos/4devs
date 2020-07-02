@@ -144,4 +144,19 @@ describe('SignUp', () => {
     cy.getByTestId('submit').dblclick()
     FormHelper.testHttpCallsCount(1)
   })
+
+  it('should not call submit if form is invalid', () => {
+    cy.route({
+      method: 'POST',
+      url: /signup/,
+      status: 200,
+      response: {
+        accessToken: faker.random.uuid()
+      }
+    }).as('request')
+
+    cy.getByTestId('email').type(faker.internet.email()).type('{enter}')
+
+    FormHelper.testHttpCallsCount(0)
+  })
 })
