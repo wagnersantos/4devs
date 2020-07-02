@@ -90,4 +90,21 @@ describe('SignUp', () => {
     )
     FormHelper.testUrl('/signup')
   })
+
+  it('should present unexpectedError if invalid data is returned', () => {
+    cy.route({
+      method: 'POST',
+      url: /signup/,
+      status: 200,
+      response: {
+        invalidProperty: faker.random.words()
+      }
+    }).as('request')
+
+    simuldateValidSubmit()
+    FormHelper.testMainError(
+      'Algo de errado aconteceu. Tente novamente em breve.'
+    )
+    FormHelper.testUrl('/signup')
+  })
 })
