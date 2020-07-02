@@ -32,12 +32,16 @@ describe('AxiosHttpClient', () => {
       expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body)
     })
 
-    it('should return  the correct response on axios.post', () => {
+    it('should return the correct response on axios.post', async () => {
       const { sut, mockedAxios } = sutFactory()
 
-      const promise = sut.post(mockPostRequest())
+      const httpResponse = await sut.post(mockPostRequest())
+      const axiosResponse = await mockedAxios.post.mock.results[0].value
 
-      expect(promise).toEqual(mockedAxios.post.mock.results[0].value)
+      expect(httpResponse).toEqual({
+        statusCode: axiosResponse.status,
+        body: axiosResponse.data
+      })
     })
 
     it('should return correct error on axios.post', () => {
