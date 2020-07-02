@@ -73,4 +73,21 @@ describe('SignUp', () => {
     FormHelper.testMainError('Esse e-mail já está em uso')
     FormHelper.testUrl('/signup')
   })
+
+  it('should present unexpectedError on default error cases', () => {
+    cy.route({
+      method: 'POST',
+      url: /signup/,
+      status: faker.helpers.randomize([400, 404, 500]),
+      response: {
+        error: faker.random.words()
+      }
+    }).as('request')
+
+    simuldateValidSubmit()
+    FormHelper.testMainError(
+      'Algo de errado aconteceu. Tente novamente em breve.'
+    )
+    FormHelper.testUrl('/signup')
+  })
 })
