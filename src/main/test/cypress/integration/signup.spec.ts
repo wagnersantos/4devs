@@ -107,4 +107,21 @@ describe('SignUp', () => {
     )
     FormHelper.testUrl('/signup')
   })
+
+  it('should present save accessToken if valid credentials are provided', () => {
+    cy.route({
+      method: 'POST',
+      url: /signup/,
+      status: 200,
+      response: {
+        accessToken: faker.random.uuid()
+      }
+    }).as('request')
+
+    simuldateValidSubmit()
+    cy.getByTestId('error-wrap').should('not.have.descendants')
+
+    FormHelper.testUrl('/')
+    FormHelper.testLocalStorageItem('accessToken')
+  })
 })
