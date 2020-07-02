@@ -1,10 +1,13 @@
 import faker from 'faker'
 import * as FormHelper from '../support/form-helper'
 
-const simuldateValidSubmit = (): void => {
+const populateFields = (): void => {
   cy.getByTestId('email').type(faker.internet.email())
   cy.getByTestId('password').type(faker.random.alphaNumeric(5))
+}
 
+const simuldateValidSubmit = (): void => {
+  populateFields()
   cy.getByTestId('submit').click()
 }
 
@@ -119,9 +122,7 @@ describe('Login', () => {
       }
     }).as('request')
 
-    cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('password').type(faker.random.alphaNumeric(5))
-
+    populateFields()
     cy.getByTestId('submit').dblclick()
     FormHelper.testHttpCallsCount(1)
   })
