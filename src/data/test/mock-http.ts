@@ -4,7 +4,9 @@ import {
   HttpPostClient,
   HttpPostParams,
   HttpResponse,
-  HttpStatuscCode
+  HttpStatuscCode,
+  HttpGetClient,
+  HttpGetParams
 } from '@/data/protocols/http'
 
 export const mockPostRequest = (): HttpPostParams<any> => ({
@@ -12,17 +14,28 @@ export const mockPostRequest = (): HttpPostParams<any> => ({
   body: faker.random.objectElement()
 })
 
-export class HttpPostClientSpy<T, R> implements HttpPostClient<T, R> {
+export class HttpPostClientSpy<BodyType, ResponseType>
+implements HttpPostClient<BodyType, ResponseType> {
   url?: string;
-  body?: T;
-  response: HttpResponse<R> = {
+  body?: BodyType;
+  response: HttpResponse<ResponseType> = {
     statusCode: HttpStatuscCode.ok
   };
 
-  async post (params: HttpPostParams<T>): Promise<HttpResponse<R>> {
+  async post (
+    params: HttpPostParams<BodyType>
+  ): Promise<HttpResponse<ResponseType>> {
     this.url = params.url
     this.body = params.body
 
     return this.response
+  }
+}
+
+export class HttpGetClientSpy implements HttpGetClient {
+  url: string;
+
+  async get (params: HttpGetParams): Promise<void> {
+    this.url = params.url
   }
 }
