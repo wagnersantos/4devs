@@ -13,8 +13,7 @@ const input: React.FC<Props> = (props: Props) => {
   const { state, setState } = useContext(Context)
   const inputRef = useRef<HTMLInputElement>()
   const error = state[`${props.name}Error`]
-  const status = error ? '🔴' : '🉑'
-  const title = error || 'tudo certo'
+  const status = error ? 'invalid' : 'valid'
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>): void => {
     setState({
@@ -24,24 +23,25 @@ const input: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <div className={styles.inputWrap}>
+    <div
+      data-testid={`${props.name}-wrap`}
+      className={styles.inputWrap}
+      data-status={status}
+    >
       <input
         {...props}
         ref={inputRef}
+        title={error}
         placeholder=" "
         data-testid={props.name}
         onChange={handleChange}
       />
-      <label onClick={() => { inputRef.current.focus() }}>
+      <label
+        data-testid={`${props.name}-label`}
+        title={error}
+        onClick={() => { inputRef.current.focus() }}>
         {props.placeholder}
       </label>
-      <span
-        data-testid={`${props.name}-status`}
-        title={title}
-        className={styles.status}
-      >
-        {status}
-      </span>
     </div>
   )
 }
