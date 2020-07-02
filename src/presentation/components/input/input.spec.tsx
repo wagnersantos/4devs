@@ -1,6 +1,6 @@
 import React from 'react'
 import faker from 'faker'
-import { render, RenderResult } from '@testing-library/react'
+import { render, RenderResult, fireEvent } from '@testing-library/react'
 
 import Input from './input'
 
@@ -20,5 +20,15 @@ describe('Input component', () => {
     const sut = sutFactory(field)
     const input = sut.getByTestId(field) as HTMLInputElement
     expect(input).toBeTruthy()
+  })
+
+  it('should focus input on label click', () => {
+    const field = faker.database.column()
+    const sut = sutFactory(field)
+    const input = sut.getByTestId(field) as HTMLInputElement
+    const label = sut.getByTestId(`${field}-label`) as HTMLLabelElement
+
+    fireEvent.click(label)
+    expect(document.activeElement).toBe(input)
   })
 })
