@@ -26,7 +26,12 @@ implements HttpPostClient<any, any>, HttpGetClient {
   }
 
   async get (params: HttpGetParams): Promise<HttpResponse> {
-    const axiosResponse = await axios.get(params.url)
+    let axiosResponse
+    try {
+      axiosResponse = await axios.get(params.url)
+    } catch (error) {
+      axiosResponse = error.response
+    }
 
     return {
       statusCode: axiosResponse.status,
