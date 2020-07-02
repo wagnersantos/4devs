@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { AxiosHttpClient } from './axios-http-client'
 import { mockPostRequest, mockGetRequest } from '@/data/test'
-import { mockAxios, mockHttpRespnse } from '@/infra/test'
+import { mockAxios, mockHttpResponse } from '@/infra/test'
 
 jest.mock('axios')
 
@@ -48,7 +48,7 @@ describe('AxiosHttpClient', () => {
       const { sut, mockedAxios } = sutFactory()
 
       mockedAxios.post.mockRejectedValueOnce({
-        response: mockHttpRespnse()
+        response: mockHttpResponse()
       })
 
       const promise = sut.post(mockPostRequest())
