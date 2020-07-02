@@ -1,13 +1,17 @@
 import faker from 'faker'
 import * as FormHelper from '../support/form-helper'
 
-const simuldateValidSubmit = (): void => {
+const populateFields = (): void => {
   const password = faker.random.alphaNumeric(5)
+
   cy.getByTestId('name').type(faker.name.findName())
   cy.getByTestId('email').type(faker.internet.email())
   cy.getByTestId('password').type(password)
   cy.getByTestId('passwordConfirmation').type(password)
+}
 
+const simuldateValidSubmit = (): void => {
+  populateFields()
   cy.getByTestId('submit').click()
 }
 
@@ -123,5 +127,21 @@ describe('SignUp', () => {
 
     FormHelper.testUrl('/')
     FormHelper.testLocalStorageItem('accessToken')
+  })
+
+  it('should prevent multiple submits', () => {
+    cy.route({
+      method: 'POST',
+      url: /signup/,
+      status: 200,
+      response: {
+        accessToken: faker.random.uuid()
+      }
+    }).as('request')
+
+    populateFields()
+
+    cy.getByTestId('submit').dblclick()
+    FormHelper.testHttpCallsCount(1)
   })
 })
