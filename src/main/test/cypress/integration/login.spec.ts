@@ -104,7 +104,9 @@ describe('Login', () => {
     })
 
     cy.getByTestId('email').type(faker.internet.email())
-    cy.getByTestId('password').type(faker.random.alphaNumeric(5))
+    cy.getByTestId('password')
+      .type(faker.random.alphaNumeric(5))
+      .type('{enter}')
 
     cy.getByTestId('submit').click()
     cy.getByTestId('spinner').should('not.exist')
