@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 
 import {
@@ -9,18 +9,17 @@ import {
   SubmitButton
 } from '@/presentation/components'
 import { Validation } from '@/presentation/protocols/validation'
-import Context from '@/presentation/contexts/form/form-context'
-import { AddAccount, UpdateCurrentAccount } from '@/domain/usecases'
+import { FormContext, ApiContext } from '@/presentation/contexts'
+import { AddAccount } from '@/domain/usecases'
 import styles from './signup-styles.scss'
 
 type Props = {
   validation: Validation
   addAccount: AddAccount
-  updateCurrentAccount: UpdateCurrentAccount
 
 };
 
-const signup: React.FC<Props> = ({ validation, addAccount, updateCurrentAccount }: Props) => {
+const signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     isFormInvalid: true,
@@ -35,6 +34,8 @@ const signup: React.FC<Props> = ({ validation, addAccount, updateCurrentAccount 
     mainError: ''
   })
   const history = useHistory()
+  const { setCurrentAccount } = useContext(ApiContext)
+
   const {
     name,
     email,
@@ -55,7 +56,7 @@ const signup: React.FC<Props> = ({ validation, addAccount, updateCurrentAccount 
 
       const account = await addAccount.add({ name, email, password, passwordConfirmation })
 
-      await updateCurrentAccount.save(account)
+      setCurrentAccount(account)
 
       history.replace('/')
     } catch (error) {
@@ -92,7 +93,7 @@ const signup: React.FC<Props> = ({ validation, addAccount, updateCurrentAccount 
     <div className={styles.signupWrap}>
       <LoginHeader />
 
-      <Context.Provider value={{ state, setState }}>
+      <FormContext.Provider value={{ state, setState }}>
         <form
           data-testid="form"
           className={styles.form}
@@ -118,7 +119,7 @@ const signup: React.FC<Props> = ({ validation, addAccount, updateCurrentAccount 
 
           <FormStatus />
         </form>
-      </Context.Provider>
+      </FormContext.Provider>
 
       <Footer />
     </div>

@@ -1,18 +1,26 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
+
 import { SurveyList } from '@/presentation/pages'
-import { loginFactory } from '@/main/factories/pages/login/login-factory'
-import { signupFactory } from '@/main/factories/pages/signup/signup-factory'
+import { loginFactory, signupFactory } from '@/main/factories/pages'
+import { ApiContext } from '@/presentation/contexts'
+import { setCurrentAccountAdapter } from '../adapter/current-account-adapter'
 
 const Router: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/login" exact component={loginFactory} />
-        <Route path="/signup" exact component={signupFactory} />
-        <Route path="/" exact component={SurveyList} />
-      </Switch>
-    </BrowserRouter>
+    <ApiContext.Provider
+      value={{
+        setCurrentAccount: setCurrentAccountAdapter
+      }}
+    >
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login" exact component={loginFactory} />
+          <Route path="/signup" exact component={signupFactory} />
+          <Route path="/" exact component={SurveyList} />
+        </Switch>
+      </BrowserRouter>
+    </ApiContext.Provider>
   )
 }
 

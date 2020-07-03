@@ -4,7 +4,6 @@ import { remoteAuthentication } from '@/main/factories/usecases/authentication/r
 import { Login } from '@/presentation/pages'
 
 import { loginValidation } from './login-validation-factory'
-import { localUpdateCurrentAccount } from '../../usecases/update-current-account/local-update-current-account-factory'
 
 export const loginFactory: React.FC = () => {
   const authemtication = remoteAuthentication()
@@ -14,7 +13,6 @@ export const loginFactory: React.FC = () => {
     <Login
       authentication={authemtication}
       validation={validation}
-      updateCurrentAccount={localUpdateCurrentAccount()}
     />
   )
 }
