@@ -55,21 +55,13 @@
               $disabledBackground
             ),
             linear-gradient(to right, $disabledBackground, $disabledBackground),
-            linear-gradient(to right, $disabledBackground, $disabledBackground)
-              linear-gradient(
-                to right,
-                $disabledBackground,
-                $disabledBackground
-              )
-              linear-gradient(
-                to right,
-                $disabledBackground,
-                $disabledBackground
-              );
+            linear-gradient(to right, $disabledBackground, $disabledBackground),
+            linear-gradient(to right, $disabledBackground, $disabledBackground),
+            linear-gradient(to right, $disabledBackground, $disabledBackground);
           background-position: 24px 55px, left 0 bottom 0, 108px 77px,
             108px 97px, 108px 117px;
-          background-size: 60px 100px, 100% 40px, 150% 16px, 130% 16px,
-            160% 16px;
+          background-size: 60px 100px, 100% 40px, 140px 16px, 120px 16px,
+            160px 16px;
 
           &::after {
             content: '';
