@@ -6,15 +6,15 @@ export const testChildCount = (
   count: number
 ): void => {
   const element = screen.getByTestId(fieldName)
-  expect(element.childElementCount).toBe(count)
+  expect(element.children).toHaveLength(count)
 }
 
 export const testButtonIsDisabled = (
   fieldName: string,
-  isDIsabled: boolean
+  isDisabled: boolean
 ): void => {
-  const button = screen.getByTestId(fieldName) as HTMLButtonElement
-  expect(button.disabled).toBe(isDIsabled)
+  const button = screen.getByTestId(fieldName)
+  isDisabled ? expect(button).toBeDisabled() : expect(button).toBeEnabled()
 }
 
 export const testStatusForField = (
@@ -27,9 +27,9 @@ export const testStatusForField = (
 
   const status = validationError ? 'invalid' : 'valid'
 
-  expect(wrap.getAttribute('data-status')).toBe(status)
-  expect(field.title).toBe(validationError)
-  expect(label.title).toBe(validationError)
+  expect(wrap).toHaveAttribute('data-status', status)
+  expect(field).toHaveProperty('title', validationError)
+  expect(label).toHaveProperty('title', validationError)
 }
 
 export const populateField = (
@@ -43,8 +43,8 @@ export const populateField = (
 export const testElementExists = (
   fieldName: string
 ): void => {
-  const element = screen.getByTestId(fieldName)
-  expect(element).toBeTruthy()
+  const element = screen.queryByTestId(fieldName)
+  expect(element).toBeInTheDocument()
 }
 
 export const testElementText = (
@@ -52,5 +52,5 @@ export const testElementText = (
   text: string
 ): void => {
   const element = screen.getByTestId(fieldName)
-  expect(element.textContent).toBe(text)
+  expect(element).toHaveTextContent(text)
 }
