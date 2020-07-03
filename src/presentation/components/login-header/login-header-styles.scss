@@ -1,11 +1,15 @@
 @import '../../styles/colors.scss';
 
-.header {
+.headerWrap {
   display: flex;
   flex-direction: column;
   border-top: 40px solid $primayDark;
   background-color: $primary;
   align-items: center;
+
+  @media only screen and (max-width: 600px) {
+    border-top-width: 20px;
+  }
 
   img {
     margin-top: 40px;

@@ -3,8 +3,12 @@
 .headerWrap {
   display: flex;
   background-color: $primary;
-  border-top: 1px solid $primaryDark;
+  border-top: 40px solid $primaryDark;
   justify-content: center;
+
+  @media only screen and (max-width: 600px) {
+    border-top-width: 20px;
+  }
 
   .headerContent {
     display: flex;
