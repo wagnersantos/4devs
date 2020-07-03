@@ -22,6 +22,9 @@ const SurveyList: React.FC = () => {
         <ul>
           <li>
             <div className={styles.surveContent}>
+              <div className={[styles.iconWrap, styles.green].join(' ')}>
+                <img className={styles.icon} src="" alt="" />
+              </div>
               <time>
                 <span className={styles.day}>22</span>
                 <span className={styles.month}>03</span>
