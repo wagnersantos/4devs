@@ -118,7 +118,8 @@ describe('SignUp', () => {
       url: /signup/,
       status: 200,
       response: {
-        accessToken: faker.random.uuid()
+        accessToken: faker.random.uuid(),
+        name: faker.name.findName()
       }
     }).as('request')
 
@@ -126,7 +127,7 @@ describe('SignUp', () => {
     cy.getByTestId('error-wrap').should('not.have.descendants')
 
     FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('accessToken')
+    FormHelper.testLocalStorageItem('account')
   })
 
   it('should prevent multiple submits', () => {
@@ -135,7 +136,8 @@ describe('SignUp', () => {
       url: /signup/,
       status: 200,
       response: {
-        accessToken: faker.random.uuid()
+        accessToken: faker.random.uuid(),
+        name: faker.name.findName()
       }
     }).as('request')
 

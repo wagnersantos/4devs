@@ -10,17 +10,17 @@ import {
 } from '@/presentation/components'
 import { Validation } from '@/presentation/protocols/validation'
 import Context from '@/presentation/contexts/form/form-context'
-import { AddAccount, SaveAccessToken } from '@/domain/usecases'
+import { AddAccount, UpdateCurrentAccount } from '@/domain/usecases'
 import styles from './signup-styles.scss'
 
 type Props = {
   validation: Validation
   addAccount: AddAccount
-  saveAccessToken: SaveAccessToken
+  updateCurrentAccount: UpdateCurrentAccount
 
 };
 
-const signup: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Props) => {
+const signup: React.FC<Props> = ({ validation, addAccount, updateCurrentAccount }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     isFormInvalid: true,
@@ -55,7 +55,7 @@ const signup: React.FC<Props> = ({ validation, addAccount, saveAccessToken }: Pr
 
       const account = await addAccount.add({ name, email, password, passwordConfirmation })
 
-      await saveAccessToken.save(account.accessToken)
+      await updateCurrentAccount.save(account)
 
       history.replace('/')
     } catch (error) {

@@ -13,7 +13,7 @@ import { createMemoryHistory } from 'history'
 import {
   ValidationStub,
   AuthenticationSpy,
-  SaveAccessTokenMock,
+  UpdateCurrentAccountnMock,
   Helper
 } from '@/presentation/test'
 
@@ -23,7 +23,7 @@ import { InvalidCredentialsError } from '@/domain/errors'
 type SutTypes = {
   sut: RenderResult
   authenticationSpy: AuthenticationSpy
-  saveAccessTokenMock: SaveAccessTokenMock
+  updateCurrentAccountnMock: UpdateCurrentAccountnMock
 };
 
 type SutParams = {
@@ -34,7 +34,7 @@ const history = createMemoryHistory({ initialEntries: ['/login'] })
 const sutFactory = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub()
   const authenticationSpy = new AuthenticationSpy()
-  const saveAccessTokenMock = new SaveAccessTokenMock()
+  const updateCurrentAccountnMock = new UpdateCurrentAccountnMock()
 
   validationStub.errorMessage = params?.validationError
 
@@ -43,7 +43,7 @@ const sutFactory = (params?: SutParams): SutTypes => {
       <Login
         validation={validationStub}
         authentication={authenticationSpy}
-        saveAccessToken={saveAccessTokenMock}
+        updateCurrentAccount={updateCurrentAccountnMock}
       />
       ,
     </Router>
@@ -52,7 +52,7 @@ const sutFactory = (params?: SutParams): SutTypes => {
   return {
     sut,
     authenticationSpy,
-    saveAccessTokenMock
+    updateCurrentAccountnMock
   }
 }
 
@@ -172,12 +172,12 @@ describe('Login', () => {
   })
 
   it('should call SaveAccessToken on success', async () => {
-    const { sut, authenticationSpy, saveAccessTokenMock } = sutFactory()
+    const { sut, authenticationSpy, updateCurrentAccountnMock } = sutFactory()
 
     await simulateValidSubmit(sut)
 
-    expect(saveAccessTokenMock.accessToken).toBe(
-      authenticationSpy.account.accessToken
+    expect(updateCurrentAccountnMock.account).toEqual(
+      authenticationSpy.account
     )
 
     expect(history.length).toBe(1)
@@ -185,12 +185,12 @@ describe('Login', () => {
   })
 
   it('should present error if saveAccessToken fails', async () => {
-    const { sut, saveAccessTokenMock } = sutFactory()
+    const { sut, updateCurrentAccountnMock } = sutFactory()
 
     const error = new InvalidCredentialsError()
 
     jest
-      .spyOn(saveAccessTokenMock, 'save')
+      .spyOn(updateCurrentAccountnMock, 'save')
       .mockRejectedValueOnce(error)
 
     await simulateValidSubmit(sut)
