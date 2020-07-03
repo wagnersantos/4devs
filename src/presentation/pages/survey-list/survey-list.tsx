@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Header, Footer } from '@/presentation/components'
+import { Header, Footer, Icon, IconName } from '@/presentation/components'
 
 import styles from './survey-list-styles.scss'
 
@@ -14,9 +14,7 @@ const SurveyList: React.FC = () => {
         <ul>
           <li>
             <div className={styles.surveContent}>
-              <div className={[styles.iconWrap, styles.green].join(' ')}>
-                <img className={styles.icon} src="" alt="" />
-              </div>
+              <Icon className={styles.iconWrap} iconName={IconName.thumbUp} />
               <time>
                 <span className={styles.day}>22</span>
                 <span className={styles.month}>03</span>
