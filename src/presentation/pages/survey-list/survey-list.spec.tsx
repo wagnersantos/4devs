@@ -5,15 +5,15 @@ import { Helper } from '@/presentation/test'
 
 import SurveyList from './survey-list'
 import { LoadSurveyList } from '@/domain/usecases'
-import { SurveyModel } from '@/domain/models'
 import { mockSurveyListModel } from '@/domain/test'
 import { UnexpectedError } from '@/domain/errors'
+import { RemoteLoadSurveyList } from '@/data/usecases'
 
 class LoadSurveyListSpy implements LoadSurveyList {
   callsCount = 0
   surveys = mockSurveyListModel()
 
-  async loadAll (): Promise<SurveyModel[]> {
+  async loadAll (): Promise<RemoteLoadSurveyList.Model[]> {
     this.callsCount++
     return this.surveys
   }

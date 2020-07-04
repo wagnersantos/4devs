@@ -11,14 +11,15 @@ import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 
 import { SignUp } from '@/presentation/pages'
-import { Helper, ValidationStub, AddAccountSpy } from '@/presentation/test'
+import { Helper, ValidationStub } from '@/presentation/test'
 import { EmailInUseError } from '@/domain/errors'
 import { ApiContext } from '@/presentation/contexts'
-import { AccountModel } from '@/domain/models'
+import { AddAccount } from '@/domain/usecases'
+import { AddAccountSpy } from '@/domain/test'
 
 type SutTypes = {
   addAccountSpy: AddAccountSpy
-  setCurrentAccountMock(account: AccountModel)
+  setCurrentAccountMock(account: AddAccount.Model)
 };
 
 type SutParams = {
