@@ -10,14 +10,14 @@ import { mockAccountModel } from '@/domain/test'
 
 type SutTypes = {
   history: MemoryHistory
-  setCurreentAccountMock(account: AccountModel): void
+  setCurrentAccountMock(account: AccountModel): void
 };
 
 const sutFactory = (account = mockAccountModel()): SutTypes => {
   const history = createMemoryHistory({ initialEntries: ['/'] })
-  const setCurreentAccountMock = jest.fn()
+  const setCurrentAccountMock = jest.fn()
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurreentAccountMock, getCurrentAccount: () => account }}>
+    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock, getCurrentAccount: () => account }}>
       <Router history={history}>
         <Header />
       </Router>
@@ -26,16 +26,16 @@ const sutFactory = (account = mockAccountModel()): SutTypes => {
 
   return {
     history,
-    setCurreentAccountMock
+    setCurrentAccountMock
   }
 }
 
 describe('Header', () => {
   it('should call setCurrentAccount with null', () => {
-    const { history, setCurreentAccountMock } = sutFactory()
+    const { history, setCurrentAccountMock } = sutFactory()
     fireEvent.click(screen.getByTestId('logout'))
 
-    expect(setCurreentAccountMock).toHaveBeenCalledWith(undefined)
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined)
     expect(history.location.pathname).toBe('/login')
   })
 
