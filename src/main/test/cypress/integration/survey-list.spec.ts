@@ -23,4 +23,18 @@ describe('SurveyList', () => {
     cy.visit('')
     cy.getByTestId('error').should('contain.text', 'Algo de errado aconteceu. Tente novamente em breve.')
   })
+
+  it('should logout accesDeniedError', () => {
+    cy.route({
+      method: 'GET',
+      url: /surveys/,
+      status: 403,
+      response: {
+        error: faker.random.words()
+      }
+    }).as('request')
+    cy.visit('')
+
+    Helpers.testUrl('/')
+  })
 })
