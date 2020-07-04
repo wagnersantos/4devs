@@ -14,8 +14,10 @@ type Props = {
 const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
   const [state, setState] = useState({
     surveys: [] as SurveyModel[],
-    error: ''
+    error: '',
+    reload: false
   })
+  const { error, reload } = state
 
   useEffect(() => {
     (async () => {
@@ -26,7 +28,7 @@ const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
         setState({ ...state, error: error.message })
       }
     })()
-  }, [])
+  }, [reload])
 
   return (
     <div className={styles.surveyListWrap} >
@@ -35,7 +37,7 @@ const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
       <div className={styles.contentWrap}>
         <h2>Enquetes</h2>
         <SurveyContext.Provider value={{ state, setState }}>
-          {state.error ? <Error /> : <SurveyListItem />}
+          {error ? <Error /> : <SurveyListItem />}
         </SurveyContext.Provider>
       </div >
       <Footer />
