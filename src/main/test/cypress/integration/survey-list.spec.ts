@@ -52,4 +52,19 @@ describe('SurveyList', () => {
     const { name } = Helpers.getLocalStorageItem('account')
     cy.getByTestId('username').should('contain.text', name)
   })
+
+  it('should logout on link click', () => {
+    cy.route({
+      method: 'GET',
+      url: /surveys/,
+      status: faker.helpers.randomize([400, 404, 500]),
+      response: {
+        error: faker.random.words()
+      }
+    }).as('request')
+    cy.visit('')
+
+    cy.getByTestId('logout').click()
+    Helpers.testUrl('/login')
+  })
 })
