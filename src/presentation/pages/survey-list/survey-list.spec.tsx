@@ -5,9 +5,13 @@ import { Helper } from '@/presentation/test'
 
 import SurveyList from './survey-list'
 
+const sutFactory = (): void => {
+  render(<SurveyList />)
+}
+
 describe('SurveyList', () => {
   it('should present 4 empty items on start', () => {
-    render(<SurveyList />)
+    sutFactory()
     Helper.testChildCount('survey-list', 4)
   })
 })
