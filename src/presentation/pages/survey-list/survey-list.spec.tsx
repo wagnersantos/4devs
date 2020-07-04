@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 
 import { Helper } from '@/presentation/test'
 
@@ -69,5 +69,18 @@ describe('SurveyList', () => {
     const errorElement = screen.getByTestId('error')
     expect(surveyList).not.toBeInTheDocument()
     expect(errorElement).toHaveTextContent(error.message)
+  })
+
+  it('should call loadSurveyList on reload', async () => {
+    const loadSurveyListSpy = new LoadSurveyListSpy()
+    jest.spyOn(loadSurveyListSpy, 'loadAll').mockRejectedValueOnce(new UnexpectedError())
+    sutFactory(loadSurveyListSpy)
+
+    await waitFor(() => screen.getByRole('heading'))
+
+    fireEvent.click(screen.getByTestId('reload'))
+    expect(loadSurveyListSpy.callsCount).toBe(1)
+
+    await waitFor(() => screen.getByRole('heading'))
   })
 })
