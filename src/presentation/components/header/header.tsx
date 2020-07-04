@@ -8,7 +8,7 @@ import { ApiContext } from '@/presentation/contexts'
 import styles from './header-styles.scss'
 
 const Header: React.FC = () => {
-  const { setCurrentAccount } = useContext(ApiContext)
+  const { setCurrentAccount, getCurrentAccount } = useContext(ApiContext)
   const history = useHistory()
 
   const logout = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
       <div className={styles.headerContent}>
         <Logo />
         <div className={styles.logoutWrap}>
-          <span>Wagner</span>
+          <span data-testid="username">{getCurrentAccount().name}</span>
           <a data-testid="logout" href="#" onClick={logout}>Sair</a>
         </div>
       </div>
