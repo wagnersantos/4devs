@@ -21,6 +21,7 @@
     "@typescript-eslint/comma-spacing": "off",
     "@typescript-eslint/require-await": "off",
     "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/no-floating-promises": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
   }
