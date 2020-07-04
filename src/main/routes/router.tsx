@@ -1,11 +1,11 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import { SurveyList } from '@/presentation/pages'
-import { loginFactory, signupFactory } from '@/main/factories/pages'
+import { loginFactory, signupFactory, surveyListFactory } from '@/main/factories/pages'
 import { ApiContext } from '@/presentation/contexts'
 import { setCurrentAccountAdapter, getCurrentAccountAdapter } from '@/main/adapter/current-account-adapter'
 import { PrivateRoute } from '@/presentation/components'
+import { } from '../factories/pages/survey-list/survey-list-factory'
 
 const Router: React.FC = () => {
   return (
@@ -19,7 +19,7 @@ const Router: React.FC = () => {
         <Switch>
           <Route path="/login" exact component={loginFactory} />
           <Route path="/signup" exact component={signupFactory} />
-          <PrivateRoute path="/" exact component={SurveyList} />
+          <PrivateRoute path="/" exact component={surveyListFactory} />
         </Switch>
       </BrowserRouter>
     </ApiContext.Provider>
