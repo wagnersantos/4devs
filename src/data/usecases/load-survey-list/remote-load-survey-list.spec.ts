@@ -3,7 +3,7 @@ import faker from 'faker'
 import { RemoteLoadSurveyList } from './remote-load-survey-list'
 import { HttpGetClientSpy, mockRemoteSurveyListModel } from '@/data/test'
 import { HttpStatuscCode } from '@/data/protocols/http'
-import { UnexpectedError } from '@/domain/errors'
+import { UnexpectedError, AccessDeniedError } from '@/domain/errors'
 
 type SutTypes = {
   sut: RemoteLoadSurveyList
@@ -29,7 +29,7 @@ describe('RemoteLoadSurveyList', () => {
     expect(httpGetClientSpy.url).toBe(url)
   })
 
-  it('Should throw unexpectedError if HttpPostClient return 403', async () => {
+  it('Should throw AccessDeniedError if HttpPostClient return 403', async () => {
     const { sut, httpGetClientSpy } = sutFactory()
 
     httpGetClientSpy.response = {
@@ -38,7 +38,7 @@ describe('RemoteLoadSurveyList', () => {
 
     const promise = sut.loadAll()
 
-    await expect(promise).rejects.toThrow(new UnexpectedError())
+    await expect(promise).rejects.toThrow(new AccessDeniedError())
   })
 
   it('Should throw unexpectedError if HttpPostClient return 404', async () => {
@@ -57,7 +57,7 @@ describe('RemoteLoadSurveyList', () => {
     const { sut, httpGetClientSpy } = sutFactory()
 
     httpGetClientSpy.response = {
-      statusCode: HttpStatuscCode.forbidden
+      statusCode: HttpStatuscCode.serverError
     }
 
     const promise = sut.loadAll()
