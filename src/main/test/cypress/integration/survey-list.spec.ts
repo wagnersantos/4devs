@@ -37,4 +37,19 @@ describe('SurveyList', () => {
 
     Helpers.testUrl('/')
   })
+
+  it('should present correct username', () => {
+    cy.route({
+      method: 'GET',
+      url: /surveys/,
+      status: faker.helpers.randomize([400, 404, 500]),
+      response: {
+        error: faker.random.words()
+      }
+    }).as('request')
+    cy.visit('')
+
+    const { name } = Helpers.getLocalStorageItem('account')
+    cy.getByTestId('username').should('contain.text', name)
+  })
 })
