@@ -7,13 +7,12 @@ import SurveyList from './survey-list'
 import { LoadSurveyList } from '@/domain/usecases'
 import { mockSurveyListModel } from '@/domain/test'
 import { UnexpectedError } from '@/domain/errors'
-import { RemoteLoadSurveyList } from '@/data/usecases'
 
 class LoadSurveyListSpy implements LoadSurveyList {
   callsCount = 0
   surveys = mockSurveyListModel()
 
-  async loadAll (): Promise<RemoteLoadSurveyList.Model[]> {
+  async loadAll (): Promise<LoadSurveyList.Model[]> {
     this.callsCount++
     return this.surveys
   }
