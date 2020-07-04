@@ -1,5 +1,7 @@
 import faker from 'faker'
-import * as FormHelper from '../support/form-helper'
+
+import * as FormHelpers from '../support/form-helpers'
+import * as Helpers from '../support/helpers'
 
 const populateFields = (): void => {
   cy.getByTestId('email').type(faker.internet.email())
@@ -18,8 +20,8 @@ describe('Login', () => {
   })
 
   it('should load with correct initial state', () => {
-    FormHelper.testInputStatus('email', 'Campo Obrigatório')
-    FormHelper.testInputStatus('password', 'Campo Obrigatório')
+    FormHelpers.testInputStatus('email', 'Campo Obrigatório')
+    FormHelpers.testInputStatus('password', 'Campo Obrigatório')
 
     cy.getByTestId('submit').should('have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
@@ -27,9 +29,9 @@ describe('Login', () => {
 
   it('should present error state if form is invalid', () => {
     cy.getByTestId('email').type(faker.random.word())
-    FormHelper.testInputStatus('email', 'Valor inválido')
+    FormHelpers.testInputStatus('email', 'Valor inválido')
     cy.getByTestId('password').type(faker.random.alphaNumeric(3))
-    FormHelper.testInputStatus('password', 'Valor inválido')
+    FormHelpers.testInputStatus('password', 'Valor inválido')
 
     cy.getByTestId('submit').should('have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
@@ -37,10 +39,10 @@ describe('Login', () => {
 
   it('should present valid state if form is valid', () => {
     cy.getByTestId('email').type(faker.internet.email())
-    FormHelper.testInputStatus('email')
+    FormHelpers.testInputStatus('email')
 
     cy.getByTestId('password').type(faker.random.alphaNumeric(5))
-    FormHelper.testInputStatus('password')
+    FormHelpers.testInputStatus('password')
 
     cy.getByTestId('submit').should('not.have.attr', 'disabled')
     cy.getByTestId('error-wrap').should('not.have.descendants')
@@ -57,8 +59,8 @@ describe('Login', () => {
     }).as('request')
 
     simuldateValidSubmit()
-    FormHelper.testMainError('Credencias inválidas')
-    FormHelper.testUrl('/login')
+    FormHelpers.testMainError('Credencias inválidas')
+    Helpers.testUrl('/login')
   })
 
   it('should present unexpectedError on default error cases', () => {
@@ -72,27 +74,10 @@ describe('Login', () => {
     }).as('request')
 
     simuldateValidSubmit()
-    FormHelper.testMainError(
+    FormHelpers.testMainError(
       'Algo de errado aconteceu. Tente novamente em breve.'
     )
-    FormHelper.testUrl('/login')
-  })
-
-  it('should present unexpectedError if invalid data is returned', () => {
-    cy.route({
-      method: 'POST',
-      url: /login/,
-      status: 200,
-      response: {
-        invalidProperty: faker.random.words()
-      }
-    }).as('request')
-
-    simuldateValidSubmit()
-    FormHelper.testMainError(
-      'Algo de errado aconteceu. Tente novamente em breve.'
-    )
-    FormHelper.testUrl('/login')
+    Helpers.testUrl('/login')
   })
 
   it('should present save accessToken if valid credentials are provided', () => {
@@ -109,8 +94,8 @@ describe('Login', () => {
     simuldateValidSubmit()
     cy.getByTestId('error-wrap').should('not.have.descendants')
 
-    FormHelper.testUrl('/')
-    FormHelper.testLocalStorageItem('account')
+    Helpers.testUrl('/')
+    Helpers.testLocalStorageItem('account')
   })
 
   it('should prevent multiple submits', () => {
@@ -125,7 +110,7 @@ describe('Login', () => {
 
     populateFields()
     cy.getByTestId('submit').dblclick()
-    FormHelper.testHttpCallsCount(1)
+    Helpers.testHttpCallsCount(1)
   })
 
   it('should not call submit if form is invalid', () => {
@@ -140,6 +125,6 @@ describe('Login', () => {
 
     cy.getByTestId('email').type(faker.internet.email()).type('{enter}')
 
-    FormHelper.testHttpCallsCount(0)
+    Helpers.testHttpCallsCount(0)
   })
 })
