@@ -7,7 +7,7 @@ import { Helper } from '@/presentation/test'
 
 import SurveyList from './survey-list'
 import { LoadSurveyList } from '@/domain/usecases'
-import { mockSurveyListModel } from '@/domain/test'
+import { mockSurveyListModel, mockAccountModel } from '@/domain/test'
 import { UnexpectedError } from '@/domain/errors'
 import { ApiContext } from '@/presentation/contexts'
 
@@ -27,7 +27,10 @@ type SutTypes = {
 
 const sutFactory = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: jest.fn() }}>
+    <ApiContext.Provider value={{
+      setCurrentAccount: jest.fn(),
+      getCurrentAccount: () => mockAccountModel()
+    }}>
       <Router history={createMemoryHistory()}>
         <SurveyList loadSurveyList={loadSurveyListSpy} />)
       </Router>
