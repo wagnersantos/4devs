@@ -10,8 +10,8 @@ cache:
     - ~/.cache
 sript:
   - eslint 'src/**'
-  - yarn test:coveralls
-  - yarn test:cypress:ci
+  - npm run test:coveralls
+  - npm run test:cypress:ci
 deploy:
   provider: heroku
   api_key: $HEROKU_API
