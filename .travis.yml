@@ -4,3 +4,8 @@ node_js:
 sript:
   - eslint 'src/**'
   - yarn test:coveralls
+deploy:
+  provider: heroku
+  api_key: $HEROKU_API
+  app: fordevs-react-wss
+  skip_cleanup: true
