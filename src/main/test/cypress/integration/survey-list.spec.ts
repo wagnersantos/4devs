@@ -1,6 +1,6 @@
 import faker from 'faker'
 
-import * as Helpers from '../support/helpers'
+import * as Helpers from '../utils/helpers'
 
 describe('SurveyList', () => {
   beforeEach(() => {

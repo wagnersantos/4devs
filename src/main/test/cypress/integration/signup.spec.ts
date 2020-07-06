@@ -1,7 +1,7 @@
 import faker from 'faker'
 
-import * as FormHelpers from '../support/form-helpers'
-import * as Helpers from '../support/helpers'
+import * as FormHelpers from '../utils/form-helpers'
+import * as Helpers from '../utils/helpers'
 
 const populateFields = (): void => {
   const password = faker.random.alphaNumeric(5)
