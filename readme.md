@@ -1,6 +1,7 @@
 <p align="center">
 <a href="https://coveralls.io/github/wagnersantos/4devs?branch=master"><img src="https://travis-ci.com/wagnersantos/4devs.svg?branch=master">
 <a style="margin-left:10px;" href='https://coveralls.io/github/wagnersantos/4devs?branch=master'><img src='https://coveralls.io/repos/github/wagnersantos/4devs/badge.svg?branch=master' alt='Coverage Status' /></a>
+<a style="margin-left:10px;" href="https://snyk.io/test/github/wagnersantos/4devs?targetFile=package.json"><img src="https://snyk.io/test/github/wagnersantos/4devs/badge.svg?targetFile=package.json" alt="Known Vulnerabilities" data-canonical-src="https://snyk.io/test/github/wagnersantos/4devs?targetFile=package.json" style="max-width:100%;"></a>
 <a style="margin-left:10px;" href="http://standardjs.com"><img src="https://img.shields.io/badge/code%20style-standard-brightgreen.svg"></a>
 <a style="margin-left:10px;" href="https://opensource.org/licenses/"><img src="https://img.shields.io/badge/License-GPL%20v3-yellow.svg" /></a>
 <a style="margin-left:10px;" href="https://opensource.org/"><img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103"></a>
