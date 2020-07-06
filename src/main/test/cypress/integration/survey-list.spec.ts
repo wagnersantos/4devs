@@ -24,6 +24,29 @@ describe('SurveyList', () => {
     cy.getByTestId('error').should('contain.text', 'Algo de errado aconteceu. Tente novamente em breve.')
   })
 
+  it('should reload on button click', () => {
+    cy.route({
+      method: 'GET',
+      url: /surveys/,
+      status: faker.helpers.randomize([400, 404, 500]),
+      response: {
+        error: faker.random.words()
+      }
+    }).as('request')
+    cy.visit('')
+    cy.getByTestId('error').should('contain.text', 'Algo de errado aconteceu. Tente novamente em breve.')
+
+    cy.route({
+      method: 'GET',
+      url: /surveys/,
+      status: 200,
+      response: 'fx:survey-list'
+    }).as('request')
+
+    cy.getByTestId('reload').click()
+    cy.get('li:not(:empty)').should('have.length', 2)
+  })
+
   it('should logout accesDeniedError', () => {
     cy.route({
       method: 'GET',
