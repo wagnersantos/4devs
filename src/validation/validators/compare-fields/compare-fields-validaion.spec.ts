@@ -11,8 +11,8 @@ const sutFactory = (
 
 describe('CompareFieldsValidation', () => {
   it('should return error if compare is invalid', () => {
-    const field = faker.database.column()
-    const fieldToCompare = faker.database.column()
+    const field = 'any_field'
+    const fieldToCompare = 'other_filed'
 
     const sut = sutFactory(field, fieldToCompare)
     const error = sut.validate({
@@ -24,8 +24,8 @@ describe('CompareFieldsValidation', () => {
   })
 
   it('should return falsy if field compare is valid', () => {
-    const field = faker.database.column()
-    const fieldToCompare = faker.database.column()
+    const field = 'any_field'
+    const fieldToCompare = 'other_filed'
     const value = faker.random.word()
 
     const sut = sutFactory(field, fieldToCompare)
