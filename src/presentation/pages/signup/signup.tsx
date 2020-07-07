@@ -52,7 +52,7 @@ const signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
     try {
       if (isLoading || isFormInvalid) return
 
-      setState({ ...state, isLoading: true })
+      setState(old => ({ ...old, isLoading: true }))
 
       const account = await addAccount.add({ name, email, password, passwordConfirmation })
 
@@ -60,7 +60,7 @@ const signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
 
       history.replace('/')
     } catch (error) {
-      setState({ ...state, isLoading: false, mainError: error.message })
+      setState(old => ({ ...old, isLoading: false, mainError: error.message }))
     }
   }
 
