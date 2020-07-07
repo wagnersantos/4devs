@@ -4,5 +4,5 @@ import { RemoteLoadSurveyResult } from '@/data/usecases'
 import { authorizeHttpGetClientDecorator } from '@/main/factories/decorators'
 
 export const remoteLoadSurveyResult = (id: string): LoadSurveyResult => {
-  return new RemoteLoadSurveyResult(apiUrl(`surveys/${id}/results`), authorizeHttpGetClientDecorator())
+  return new RemoteLoadSurveyResult(apiUrl(`/surveys/${id}/results`), authorizeHttpGetClientDecorator())
 }

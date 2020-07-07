@@ -53,7 +53,7 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
                 return (
                   <li
                     data-testid="answer-wrap"
-                    key={answer.answer}
+                    key={`${answer.answer}-${answer.percent}`}
                     className={isCurrentAccountAnswer}
                   >
                     {
