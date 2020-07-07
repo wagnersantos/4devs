@@ -45,4 +45,13 @@ describe('RemoteLoadSurveyResult', () => {
     const promise = sut.load()
     await expect(promise).rejects.toThrow(new UnexpectedError())
   })
+
+  it('Should throw unexpectedError if HttpPostClient return 500', async () => {
+    const { sut, httpGetClientSpy } = sutFactory()
+    httpGetClientSpy.response = {
+      statusCode: HttpStatuscCode.serverError
+    }
+    const promise = sut.load()
+    await expect(promise).rejects.toThrow(new UnexpectedError())
+  })
 })
