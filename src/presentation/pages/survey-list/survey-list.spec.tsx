@@ -6,21 +6,10 @@ import { createMemoryHistory, MemoryHistory } from 'history'
 import { Helper } from '@/presentation/test'
 
 import SurveyList from './survey-list'
-import { LoadSurveyList } from '@/domain/usecases'
-import { mockSurveyListModel, mockAccountModel } from '@/domain/test'
+import { mockAccountModel, LoadSurveyListSpy } from '@/domain/test'
 import { UnexpectedError, AccessDeniedError } from '@/domain/errors'
 import { ApiContext } from '@/presentation/contexts'
 import { AccountModel } from '@/domain/models'
-
-class LoadSurveyListSpy implements LoadSurveyList {
-  callsCount = 0
-  surveys = mockSurveyListModel()
-
-  async loadAll (): Promise<LoadSurveyList.Model[]> {
-    this.callsCount++
-    return this.surveys
-  }
-}
 
 type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy
