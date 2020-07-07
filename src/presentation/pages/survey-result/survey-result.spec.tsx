@@ -17,7 +17,7 @@ type SutTypes = {
 }
 
 const sutFactory = (loadSurveyResultSpy = new LoadSurveyResultSpy()): SutTypes => {
-  const history = createMemoryHistory({ initialEntries: ['/'] })
+  const history = createMemoryHistory({ initialEntries: ['/', 'surveys/any_id'], initialIndex: 1 })
   const setCurrentAccountMock = jest.fn()
   render(
     <ApiContext.Provider value={{
@@ -119,5 +119,12 @@ describe('SurveyResult', () => {
     fireEvent.click(screen.getByTestId('reload'))
     expect(loadSurveyResultSpy.callsCount).toBe(1)
     await waitFor(() => screen.getByTestId('survey-result'))
+  })
+
+  it('should goto surveyList on back button click', async () => {
+    const { history } = sutFactory()
+    await waitFor(() => screen.getByTestId('survey-result'))
+    fireEvent.click(screen.getByTestId('back-button'))
+    expect(history.location.pathname).toBe('/')
   })
 })
