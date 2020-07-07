@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-import { Header, Footer } from '@/presentation/components'
+import { Header, Footer, Error } from '@/presentation/components'
 
-import { SurveyContext, SurveyListItem, Error } from '@/presentation/pages/survey-list/components'
+import { SurveyContext, SurveyListItem } from '@/presentation/pages/survey-list/components'
 import { LoadSurveyList } from '@/domain/usecases'
 
 import styles from './survey-list-styles.scss'
@@ -18,10 +18,15 @@ const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
     error: '',
     reload: false
   })
+  const { error, reload } = state
+
   const handleError = useErrorHandler((error: Error) => {
     setState(old => ({ ...old, error: error.message }))
   })
-  const { error, reload } = state
+
+  const handleClickReload = (): void => {
+    setState(old => ({ surveys: [], error: '', reload: !old.reload }))
+  }
 
   useEffect(() => {
     loadSurveyList.loadAll()
@@ -36,7 +41,7 @@ const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
       <div className={styles.contentWrap}>
         <h2>Enquetes</h2>
         <SurveyContext.Provider value={{ state, setState }}>
-          {error ? <Error /> : <SurveyListItem />}
+          {error ? <Error error={state.error} reload={handleClickReload} /> : <SurveyListItem />}
         </SurveyContext.Provider>
       </div >
       <Footer />
