@@ -6,17 +6,20 @@ import { ApiContext } from '@/presentation/contexts'
 import { Helper } from '@/presentation/test'
 import { SurveyResult } from '@/presentation/pages'
 
+const sutFactory = (): void => {
+  render(
+    <ApiContext.Provider value={{
+      setCurrentAccount: jest.fn(),
+      getCurrentAccount: () => mockAccountModel()
+    }}>
+      <SurveyResult />)
+
+    </ApiContext.Provider>
+  )
+}
 describe('SurveyResult', () => {
   it('should present correct initial state', async () => {
-    render(
-      <ApiContext.Provider value={{
-        setCurrentAccount: jest.fn(),
-        getCurrentAccount: () => mockAccountModel()
-      }}>
-        <SurveyResult />)
-
-      </ApiContext.Provider>
-    )
+    sutFactory()
     const error = screen.queryByTestId('error')
     const loading = screen.queryByTestId('loading')
     Helper.testChildCount('survey-result', 0)
