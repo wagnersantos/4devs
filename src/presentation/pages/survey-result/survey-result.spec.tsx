@@ -5,15 +5,13 @@ import { mockAccountModel, LoadSurveyResultSpy, mockSurveyResultModel } from '@/
 import { ApiContext } from '@/presentation/contexts'
 import { Helper } from '@/presentation/test'
 import { SurveyResult } from '@/presentation/pages'
+import { UnexpectedError } from '@/domain/errors'
 
 type SutTypes = {
   loadSurveyResultSpy: LoadSurveyResultSpy
 }
 
-const sutFactory = (surveyResult = mockSurveyResultModel()): SutTypes => {
-  const loadSurveyResultSpy = new LoadSurveyResultSpy()
-  loadSurveyResultSpy.surveyResult = surveyResult
-
+const sutFactory = (loadSurveyResultSpy = new LoadSurveyResultSpy()): SutTypes => {
   render(
     <ApiContext.Provider value={{
       setCurrentAccount: jest.fn(),
@@ -45,10 +43,12 @@ describe('SurveyResult', () => {
   })
 
   it('should present surveyResult data on success', async () => {
+    const loadSurveyResultSpy = new LoadSurveyResultSpy()
     const surveyResult = Object.assign(mockSurveyResultModel(), {
       date: new Date('2020-01-10T00:00:00')
     })
-    sutFactory(surveyResult)
+    loadSurveyResultSpy.surveyResult = surveyResult
+    sutFactory(loadSurveyResultSpy)
     await waitFor(() => screen.getByTestId('survey-result'))
 
     expect(screen.getByTestId('question')).toHaveTextContent(surveyResult.question)
@@ -73,5 +73,20 @@ describe('SurveyResult', () => {
     const percents = screen.queryAllByTestId('percent')
     expect(percents[0]).toHaveTextContent(`${surveyResult.answers[0].percent}%`)
     expect(percents[1]).toHaveTextContent(`${surveyResult.answers[1].percent}%`)
+  })
+
+  it('should render error on UnexpectedError', async () => {
+    const loadSurveyResultSpy = new LoadSurveyResultSpy()
+    const error = new UnexpectedError()
+    jest.spyOn(loadSurveyResultSpy, 'load').mockRejectedValueOnce(error)
+    sutFactory(loadSurveyResultSpy)
+    await waitFor(() => screen.getByTestId('survey-result'))
+
+    const surveyList = screen.queryByTestId('question')
+    const errorElement = screen.getByTestId('error')
+    const loading = screen.queryByTestId('loading')
+    expect(surveyList).not.toBeInTheDocument()
+    expect(errorElement).toHaveTextContent(error.message)
+    expect(loading).not.toBeInTheDocument()
   })
 })
