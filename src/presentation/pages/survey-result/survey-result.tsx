@@ -7,6 +7,7 @@ import { LoadSurveyResult } from '@/domain/usecases'
 import { useErrorHandler } from '@/presentation/hooks'
 
 import styles from './survey-result-styles.scss'
+import { useHistory } from 'react-router-dom'
 
 type Props = {
   loadSurveyResult: LoadSurveyResult
@@ -20,6 +21,7 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
     reload: false
   })
   const { surveyResult, error, isLoading, reload } = state
+  const { goBack } = useHistory()
 
   const handleError = useErrorHandler((error: Error) => {
     setState(old => ({ ...old, surveyResult: null, error: error.message }))
@@ -79,7 +81,7 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
                 )
               })}
             </FlipMove>
-            <button>voltar</button>
+            <button data-testid="back-button" onClick={() => goBack()}>voltar</button>
           </>
         }
 
