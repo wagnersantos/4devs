@@ -1,22 +1,25 @@
-import { HttpGetClient, HttpStatuscCode } from '@/data/protocols/http'
+import { HttpClient, HttpStatusCode } from '@/data/protocols/http'
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors'
 import { LoadSurveyResult } from '@/domain/usecases'
 
 export class RemoteLoadSurveyResult implements LoadSurveyResult {
   constructor (
     private readonly url: string,
-    private readonly httpGetClient: HttpGetClient<LoadSurveyResult.Model>) {}
+    private readonly httpClient: HttpClient<LoadSurveyResult.Model>) {}
 
   async load (): Promise<LoadSurveyResult.Model> {
-    const httpResponse = await this.httpGetClient.get({ url: this.url })
+    const httpResponse = await this.httpClient.request({
+      url: this.url,
+      method: 'get'
+    })
     const remoteSurveyResult = httpResponse.body
 
     switch (httpResponse.statusCode) {
-      case HttpStatuscCode.ok:
+      case HttpStatusCode.ok:
         return Object.assign({}, remoteSurveyResult, {
           date: new Date(remoteSurveyResult.date)
         })
-      case HttpStatuscCode.forbidden:
+      case HttpStatusCode.forbidden:
         throw new AccessDeniedError()
       default:
         throw new UnexpectedError()
