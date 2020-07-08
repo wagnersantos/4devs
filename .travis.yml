@@ -6,10 +6,7 @@ addons:
     - libgconf-2-4
 cache:
   directories:
-    - ~/.npm
     - ~/.cache
-  override:
-    - npm ci
 script:
   - eslint 'src/**'
   - npm run test:coveralls
