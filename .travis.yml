@@ -7,10 +7,8 @@ addons:
 cache:
   npm: true
   directories:
-    - ~/.cache/yarn
+    - ~/.cache
     - ~/.cache/Cypress
-  override:
-    - npm ci
 script:
   - eslint 'src/**'
   - npm run test:coveralls
