@@ -8,10 +8,10 @@ script:
   - eslint 'src/**'
   - npm run test:coveralls
   - npm run test:cypress:ci
-  cache:
-    npm: true
-    directories:
-      - ~/.cache
+cache:
+  npm: true
+  directories:
+    - ~/.cache
 deploy:
   provider: heroku
   api_key: $HEROKU_API
