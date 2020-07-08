@@ -1,10 +1,10 @@
 export type SurveyResultModel = {
   question: string
   date: Date
-  answers: SurveyResultAnswewrModel[]
-};
+  answers: SurveyResultAnswerModel[]
+}
 
-export type SurveyResultAnswewrModel = {
+export type SurveyResultAnswerModel = {
   image?: string
   answer: string
   count: number
