@@ -126,5 +126,18 @@ describe('SurveyResult', () => {
       cy.get('li:nth-child(2)').click()
       cy.getByTestId('error').should('contain.text', 'Algo de errado aconteceu. Tente novamente em breve.')
     })
+
+    it('Should logout on AccessDeniedError', () => {
+      cy.route({
+        method: 'PUT',
+        url: /surveys/,
+        status: 403,
+        response: {
+          error: faker.random.words()
+        }
+      }).as('request')
+      cy.get('li:nth-child(2)').click()
+      Helpers.testUrl('/login')
+    })
   })
 })
