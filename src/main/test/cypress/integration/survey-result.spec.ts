@@ -58,4 +58,29 @@ describe('SurveyResult', () => {
     cy.visit('/surveys/any_id')
     Helpers.testUrl('/login')
   })
+
+  it('Should present survey result', () => {
+    cy.route({
+      method: 'GET',
+      url: /surveys/,
+      status: 200,
+      response: 'fx:survey-result'
+    }).as('request')
+
+    cy.visit('/surveys/any_id')
+    cy.getByTestId('question').should('have.text', 'Question')
+    cy.getByTestId('day').should('have.text', '23')
+    cy.getByTestId('month').should('have.text', 'mar')
+    cy.getByTestId('year').should('have.text', '2020')
+    cy.get('li:nth-child(1)').then(li => {
+      assert.equal(li.find('[data-testid="answer"]').text(), 'other_answer')
+      assert.equal(li.find('[data-testid="percent"]').text(), '50%')
+      assert.equal(li.find('[data-testid="image"]').attr('src'), 'other_image')
+    })
+    cy.get('li:nth-child(2)').then(li => {
+      assert.equal(li.find('[data-testid="answer"]').text(), 'other_answer_2')
+      assert.equal(li.find('[data-testid="percent"]').text(), '30%')
+      assert.notExists(li.find('[data-testid="image"]'))
+    })
+  })
 })
