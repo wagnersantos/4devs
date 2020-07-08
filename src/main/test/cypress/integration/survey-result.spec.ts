@@ -45,4 +45,17 @@ describe('SurveyResult', () => {
     cy.getByTestId('reload').click()
     cy.getByTestId('question').should('exist')
   })
+
+  it('should logout accesDeniedError', () => {
+    cy.route({
+      method: 'GET',
+      url: /surveys/,
+      status: 403,
+      response: {
+        error: faker.random.words()
+      }
+    }).as('request')
+    cy.visit('/surveys/any_id')
+    Helpers.testUrl('/login')
+  })
 })

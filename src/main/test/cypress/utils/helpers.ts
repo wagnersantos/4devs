@@ -4,7 +4,7 @@ export const testHttpCallsCount = (count: number): void => {
   cy.get('@request.all').should('have.length', count)
 }
 
-export const testUrl = (path): void => {
+export const testUrl = (path: string): void => {
   cy.url().should('eq', `${baseUrl}${path}`)
 }
 

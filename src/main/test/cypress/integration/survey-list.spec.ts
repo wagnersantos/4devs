@@ -58,7 +58,7 @@ describe('SurveyList', () => {
     }).as('request')
     cy.visit('')
 
-    Helpers.testUrl('/')
+    Helpers.testUrl('/login')
   })
 
   it('should present correct username', () => {
