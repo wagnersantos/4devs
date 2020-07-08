@@ -21,7 +21,7 @@ const Result: React.FC<Props> = ({ surveyResult }: Props) => {
         <h2 data-testid="question">{surveyResult.question}</h2>
       </hgroup>
       <span data-testid="answers" className={styles.answerList}>
-        {surveyResult.answers?.map(answer =>
+        {surveyResult.answers.map(answer =>
           <SurveyResultAnswer key={`${answer.answer}-${answer.percent}`} answer={answer} />
         )}
       </span>
